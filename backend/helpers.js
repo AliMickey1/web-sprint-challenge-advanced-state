@@ -10,12 +10,12 @@ const getId = () => {
 }
 
 const answerSchema = yup.object().shape({
-  quiz_id: yup
+  question_id: yup
     .string()
     .trim()
-    .required('quiz_id is required')
-    .min(5, 'quiz_id must be five characters long')
-    .max(5, 'quiz_id must be five characters long'),
+    .required('question_id is required')
+    .min(5, 'question_id must be five characters long')
+    .max(5, 'question_id must be five characters long'),
   answer_id: yup
     .string()
     .trim()
@@ -47,7 +47,7 @@ const quizSchema = yup.object().shape({
 
 const quizzes = [
   {
-    quiz_id: getId(),
+    question_id: getId(),
     question: 'What is a closure?',
     answers: [
       { answer_id: getId(), text: 'A function plus its bindings', correct: true },
@@ -55,7 +55,7 @@ const quizzes = [
     ],
   },
   {
-    quiz_id: getId(),
+    question_id: getId(),
     question: 'What is a promise?',
     answers: [
       { answer_id: getId(), text: 'A value representing a future result', correct: true },
@@ -63,7 +63,7 @@ const quizzes = [
     ],
   },
   {
-    quiz_id: getId(),
+    question_id: getId(),
     question: 'An ES6 module is a...',
     answers: [
       { answer_id: getId(), text: 'JS file', correct: true },
@@ -96,10 +96,10 @@ async function getNextQuiz() {
 
 async function postAnswer(payload) {
   try {
-    const { quiz_id, answer_id } = await answerSchema.validate(payload)
-    const question = quizzes.find(q => q.quiz_id === quiz_id)
+    const { question_id, answer_id } = await answerSchema.validate(payload)
+    const question = quizzes.find(q => q.question_id === question_id)
     const answer = question?.answers.find(an => an.answer_id === answer_id)
-    if (!question) return [404, { message: `We could not find a quiz with quiz_id ${quiz_id}` }]
+    if (!question) return [404, { message: `We could not find a quiz with question_id ${question_id}` }]
     if (!answer) return [404, { message: `We could not find an answer with answer_id ${answer_id}` }]
     if (answer.correct) return [200, { message: 'Nice job! That was the correct answer' }]
     return [200, { message: 'What a shame! That was the incorrect answer' }]
@@ -112,7 +112,7 @@ async function postQuiz(payload) {
   try {
     const { question_text, true_answer_text, false_answer_text } = await quizSchema.validate(payload)
     const newQuestion = {
-      quiz_id: getId(),
+      question_id: getId(),
       question: question_text,
       answers: [
         { answer_id: getId(), text: true_answer_text, correct: true },
