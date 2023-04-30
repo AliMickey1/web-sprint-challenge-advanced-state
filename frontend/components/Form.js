@@ -2,33 +2,21 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../state/action-creators'
 
-
-
-
 export function Form(props) {
-  const { inputChange, newFalseAnswer, newQuestion, newTrueAnswer } = props
+  const [disabled, setDisabled ] = useState(true)
 
-  // const inputQuestion = '';
-  // const inputTruth = '';
-  // const inputFalse = '';
+  const { inputChange, newFalseAnswer, newQuestion, newTrueAnswer, postAnswer } = props
 
   const inputText = ({ target: { name, value } }) => {
+    setDisabled(false)
     inputChange({ name, value })
   }
 
   const onSubmit = evt => {
     evt.preventDefault();
-
+    postAnswer(newQuestion, newTrueAnswer, newFalseAnswer)
   }
 
-  const isDisabled = () => {
-    return (
-      newQuestion.trim().length < 0 && 
-      newTrueAnswer.trim().length < 0 && 
-      newFalseAnswer.trim().length < 0
-
-    )
-  }
 
   return (
     <form id="form" onSubmit={onSubmit}>
@@ -54,7 +42,7 @@ export function Form(props) {
       id="newFalseAnswer" 
       placeholder="Enter false answer" 
       />
-      <button id="submitNewQuizBtn" disabled={isDisabled}>Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
     </form>
   )
 }

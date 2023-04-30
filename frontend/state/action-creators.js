@@ -22,8 +22,8 @@ export function setMessage(message) {
 }
 
 export function setQuiz(quiz) { 
-  // const payload = quiz
-  return { type: types.SET_QUIZ_INTO_STATE, payload: quiz }
+  const payload = quiz
+  return { type: types.SET_QUIZ_INTO_STATE, payload }
 }
 
 export function inputChange({ value }) { 
@@ -62,13 +62,16 @@ export function postAnswer({ question_text, true_answer_text, false_answer_text 
   //   // - Dispatch the fetching of the next quiz
 
     // axios.post('http://localhost:9000/api/quiz/new', { question_text, true_answer_text, false_answer_text })
-    axiosWithAuth().post(
+    axios.post(
       'http://localhost:9000/api/quiz/new', 
       { question_text, true_answer_text, false_answer_text }
     )
     .then(res => {
       dispatch(selectAnswer(""))
-      dispatch(setMessage())
+      dispatch(setMessage({
+        main: `${res.data.verdict}`,
+        code: res.data.is_correct ? 'green' : 'red',
+      }))
       dispatch(fetchQuiz())
     })
     .catch(err => {
@@ -76,23 +79,19 @@ export function postAnswer({ question_text, true_answer_text, false_answer_text 
     })
   }
 }
-export function postQuiz({question_id, answer_id }) {
+export function postQuiz({ quiz_id, answer_id }) {
   return function (dispatch) {
-    // On successful POST:
-    // - Dispatch the correct message to the the appropriate state
-    // - Dispatch the resetting of the form
-    // axios.post('http://localhost:9000/api/quiz/answer', { question_id, answer_id })
-
-    axiosWithAuth().post(
+    axios.post(
       'http://localhost:9000/api/quiz/answer', 
-      { question_id, answer_id }
+      { quiz_id, answer_id }
       )
     .then(res => {
       dispatch(setMessage({
         main: `${res.data.verdict}`,
         code: res.data.is_correct ? 'green' : 'red',
       }))
-      dispatch(resetForm())
+      // dispatch(resetForm())
+      dispatch(fetchQuiz())
     })
     .catch(err => {
       setError(err, dispatch)
@@ -100,3 +99,7 @@ export function postQuiz({question_id, answer_id }) {
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
+function setError(err, dispatch) {
+  const errToDisplay = err.response ? err.response.data.message : err.message
+  dispatch(setMessage({ main: errToDisplay, code: 'red' }))
+}

@@ -20,7 +20,7 @@ function quiz(state = initialQuizState, action) {
     case types.RESET_FORM:
       return initialQuizState
     case types.SET_QUIZ_INTO_STATE:
-      return { answer_id: null, question_id: action.payload }
+      return { question_id: action.payload, answer_id: null }
     case types.SET_SELECTED_ANSWER:
       return { ...state, answer_id: action.payload }
   default:    
@@ -46,8 +46,7 @@ function infoMessage(state = initialMessageState, action) {
     case types.RESET_FORM:
       return initialMessageState
     case types.SET_INFO_MESSAGE:
-      const payload = action.payload
-      return payload
+      return action.payload
     default:
    return state
   }
@@ -62,8 +61,8 @@ function form(state = initialFormState, action) {
   switch(action.type) {
     case types.RESET_FORM:
       return action.payload
-    case types.SET_QUIZ_INTO_STATE:
-      return action.payload
+    // case types.SET_QUIZ_INTO_STATE:
+    //   return action.payload
     case types.INPUT_CHANGE: {
       // const { name, value } = action.payload
       return { ...state, value: action.payload}
