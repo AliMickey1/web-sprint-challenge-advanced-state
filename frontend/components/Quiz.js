@@ -1,15 +1,14 @@
-import React, {  useState, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../state/action-creators'
 
 
 export function Quiz(props) {
 
-  const [ active, setActive ] = useState(false)
     const {
-      quiz: { question_id, question, answer_id }, 
+      quiz: { question, answer_id }, 
       fetchQuiz, 
-      postQuiz,
+      postAnswer,
       selectAnswer
     } = props
 
@@ -21,48 +20,34 @@ export function Quiz(props) {
 
 const onAnswer = () => {
 
-  // const { question_id } = quiz_question
-  // for (let key of question_id) {
-  //   console.log(question_id(key))
-  // }
-
-  // const quiz_id = question_id["question_id"]
-
-
-  
-  // JSON.stringify(question_id);
-  // console.log(`quiz_id is ${quiz_id} & answer_id is ${answer_id}`)
-  postQuiz({ question_id, answer_id })
+  const { question_id } = question
+  postAnswer({ question_id, answer_id })
 }
 
   return (
     
-    <div id="quizContainer">
+    <div id="wrapper">
       {
-        question_id ? (
+          question ? (
           <>
-            {<h2>{question}</h2>}
-            <div className="quiz">
-              <div className="question text">
-                {question_id.question}
-              </div>
+            {<h2>{question.question}</h2>}
+              <div id="quizAnswers">
               {
-                question_id.answers.map(opt => (
+                  question.answers.map(opt => (
                   <div
                     key={opt.answer_id}
                     className={`answer${answer_id === opt.answer_id ? ' selected' : ''}`}
                     onClick={() => selectAnswer(opt.answer_id)}
                   >
-                   <div className="md">{opt.text}</div>
-                    <button className="wide">
+                   <div className="answer">{opt.text}</div>
+                    <button>
                       {answer_id === opt.answer_id ? 'SELECTED' : 'Select'}
                     </button>
                   </div>
                 ))
               }
-            </div>
-            <div className="button-group">
-              <button className="jumbo-button" onClick={onAnswer} disabled={!answer_id}>
+
+                <button id="submitAnswerBtn" onClick={onAnswer} disabled={!answer_id}>
                 Submit answer
               </button>
              
@@ -75,4 +60,4 @@ const onAnswer = () => {
   )
 }
 
-export default connect(st=> ({quiz: st.quiz, question: st.question}), {fetchQuiz: actions.fetchQuiz, selectAnswer: actions.selectAnswer, postQuiz: actions.postQuiz})(Quiz)
+export default connect(st=> ({quiz: st.quiz, question: st.question}), {fetchQuiz: actions.fetchQuiz, selectAnswer: actions.selectAnswer, postAnswer: actions.postAnswer})(Quiz)

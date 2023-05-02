@@ -6,11 +6,26 @@ const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch (action.type) {
     case types.MOVE_CLOCKWISE:
-      return state + 1
+      if (state === 5)
+      {
+        state = 0
+        return state
+      }
+      else
+      {
+        return state + 1
+      }
+
     case types.MOVE_COUNTERCLOCKWISE:
-      return state - 1
+      if (state === 0)
+      {
+        state = 5
+      }
+      else{
+        return state - 1
+      }
     default:
-    return state
+       return state
   }
 }
 
@@ -20,7 +35,7 @@ function quiz(state = initialQuizState, action) {
     case types.RESET_FORM:
       return initialQuizState
     case types.SET_QUIZ_INTO_STATE:
-      return { question_id: action.payload, answer_id: null }
+      return { question: action.payload, answer_id: null }
     case types.SET_SELECTED_ANSWER:
       return { ...state, answer_id: action.payload }
   default:    
@@ -40,7 +55,7 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
   }
 }
 
-const initialMessageState = ''
+const initialMessageState = {main:''}
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case types.RESET_FORM:
@@ -60,15 +75,25 @@ const initialFormState = {
 function form(state = initialFormState, action) {
   switch(action.type) {
     case types.RESET_FORM:
-      return action.payload
-    // case types.SET_QUIZ_INTO_STATE:
-    //   return action.payload
+      return initialQuizState      
     case types.INPUT_CHANGE: {
-      // const { name, value } = action.payload
-      return { ...state, value: action.payload}
+      const { name, value } = action.payload
+      if (Object.keys(state).includes(name)) {
+        return { ...state, [name]: value }
+      }
+      const [optionName, optionKey] = name.split('-')
+      const options = state.options
+      if (optionKey && Object.keys(options).includes(optionKey)) {
+        const option = state.options[optionKey]
+        return {
+          ...state,
+          options: {
+            ...options,
+            [optionKey]: { ...option, [optionName]: value },
+          }
+        }
+      }
     }
-    
-
   default:
     return state
   }

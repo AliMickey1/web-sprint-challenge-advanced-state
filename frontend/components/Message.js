@@ -1,10 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+export function Message({ infoMessage }) {
 
+  const { main, code, time } = infoMessage
 
-export function Message(props) {
-  return <div id="message">Nice job!</div>
+  return (
+
+      <span>{main}</span>
+
+  )
 }
 
-export default Message
+export default connect(st => ({infoMessage: st.infoMessage}))(Message)
