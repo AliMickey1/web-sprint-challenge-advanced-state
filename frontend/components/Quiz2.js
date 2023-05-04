@@ -26,12 +26,12 @@ const submitAnswerBtn = () => {
 
   return (
     
-    <div id="wrapper">
+    <div id="quizContainer">
       {
           question ? (
           <>
             {<h2>{question.question}</h2>}
-            <div id="quizAnswers">
+            <div className="quiz">
               {
                   question.answers.map(opt => (
                   <div
@@ -39,8 +39,8 @@ const submitAnswerBtn = () => {
                     className={`answer${answer_id === opt.answer_id ? ' selected' : ''}`}
                     onClick={() => selectAnswer(opt.answer_id)}
                   >
-                   {opt.text}
-                    <button>
+                   <div className="md">{opt.text}</div>
+                    <button className="wide">
                       {answer_id === opt.answer_id ? 'SELECTED' : 'Select'}
                     </button>
                   </div>
@@ -48,7 +48,7 @@ const submitAnswerBtn = () => {
               }
             </div>
             <div className="button-group">
-              <button id="submitAnswerBtn" onClick={submitAnswerBtn} disabled={!answer_id}>
+              <button id="submitAnswerBtn" onClick={submitAnswerBtn()} disabled={!answer_id}>
                 Submit answer
               </button>
              

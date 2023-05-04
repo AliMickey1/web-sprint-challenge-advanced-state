@@ -94,6 +94,7 @@ function form(state = initialFormState, action) {
         }
       }
     }
+    
   default:
     return state
   }
