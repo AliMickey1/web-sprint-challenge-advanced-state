@@ -4,10 +4,6 @@ import * as actions from '../state/action-creators'
 
 export function Form(props) {
   const [disabled, setDisabled ] = useState(true)
-  const [disableQuestion, setDisableQuestion] = useState(true)
-  const [disableTrue, setDisableTrue] = useState(true)
-  const [disableFalse, setDisableFalse] = useState(true)
-
 
     const { 
       form: { newFalseAnswer, newQuestion, newTrueAnswer, question_text, true_answer_text, false_answer_text },
@@ -15,15 +11,15 @@ export function Form(props) {
     } = props
 
     const isDisabled = () => {
-        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length > 0) && (newFalseAnswer.trim().length > 0)) {
+        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length >= 1) && (newFalseAnswer.trim().length >= 1)) {
         setDisabled(false)
       }
     }
   
-    const onChange = evt => {
-      const { name, value } = evt.target
+    const onChange = ({ target: { name, value } }) => {
       inputChange({ name, value })
       isDisabled()
+      console.log(`value: ${value} disabled: ${disabled}`)
     }
 
   const onSubmit = evt => {
@@ -31,21 +27,20 @@ export function Form(props) {
 
     console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
     // const { question_text, true_answer_text, false_answer_text } = 
-    var question_text = newQuestion
-    var true_answer_text = newTrueAnswer
-    var false_answer_text = newFalseAnswer
+    // var question_text = newQuestion
+    // var true_answer_text = newTrueAnswer
+    // var false_answer_text = newFalseAnswer
     // postQuiz({newQuestion, newTrueAnswer, newFalseAnswer})
     postQuiz({question_text, true_answer_text, false_answer_text})
   }
 
 
   return (
-    <form id="form">
+    <form id="form" onSubmit={onSubmit}>
       <h2>Create New Quiz</h2>
       <input 
         maxLength={50} 
         id="newQuestion"
-        // onChange={newQuestionInput} 
         onChange={onChange}
         value={newQuestion}
         name="newQuestion"
@@ -54,7 +49,6 @@ export function Form(props) {
       <input 
       maxLength={50} 
       id="newTrueAnswer"
-      // onChange={newTrueAnswerInput} 
       onChange={onChange}
       value={newTrueAnswer} 
       name="newTrueAnswer" 
@@ -63,13 +57,13 @@ export function Form(props) {
       <input 
       maxLength={50} 
       id="newFalseAnswer"
-      // onChange={newFalseAnswerInput} 
+
       onChange={onChange}
       value={newFalseAnswer} 
       name="newFalseAnswer" 
       placeholder="Enter false answer" 
       />
-      <button onClick={onSubmit} id="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
     </form>
   )
 }

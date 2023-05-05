@@ -67,22 +67,15 @@ export function postAnswer({ question_id, answer_id }) {
   }
 }
 
-// newQuestion, newTrueAnswer, newFalseAnswer
 
 export function postQuiz({question_text, true_answer_text, false_answer_text}) {
   return function (dispatch) {
-      // let question_text = null
-      // let true_answer_text = null
-      // let false_answer_text = null
-      // question_text = newQuestion
-      // true_answer_text = newTrueAnswer
-      // false_answer_text = newFalseAnswer
-    // console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
+     
     console.log(`question_text: ${question_text}, true_answer_text: ${true_answer_text}, false_answer_text: ${false_answer_text}`)
       axios.post(
         'http://localhost:9000/api/quiz/new',       
         // ({newQuestion, newTrueAnswer, newFalseAnswer})
-       ({ question_text, true_answer_text, false_answer_text })
+       { question_text, true_answer_text, false_answer_text }
       )
       .then(res => {
         dispatch(setMessage({
@@ -100,3 +93,9 @@ function setError(err, dispatch) {
   const errToDisplay = err.response ? err.response.data.message : err.message
   dispatch(setMessage({ main: errToDisplay, code: 'red' }))
 }
+
+ // let question_text = newQuestion
+      // let true_answer_text = newTrueAnswer
+      // let false_answer_text = newFalseAnswer
+
+    // console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)

@@ -71,9 +71,9 @@ const initialFormState = {
   newQuestion: '',
   newTrueAnswer: '',
   newFalseAnswer: '',
-  question_text: '', 
-  true_answer_text: '',
-  false_answer_text: '',
+  // question_text: '', 
+  // true_answer_text: '',
+  // false_answer_text: '',
 }
 function form(state = initialFormState, action) {
   switch(action.type) {
