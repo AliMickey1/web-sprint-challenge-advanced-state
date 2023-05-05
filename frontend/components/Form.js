@@ -11,7 +11,7 @@ export function Form(props) {
     } = props
 
     const isDisabled = () => {
-        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length >= 1) && (newFalseAnswer.trim().length >= 1)) {
+        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length > 0) && (newFalseAnswer.trim().length > 0)) {
         setDisabled(false)
       }
       else{

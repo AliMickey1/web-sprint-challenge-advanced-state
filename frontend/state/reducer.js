@@ -78,7 +78,7 @@ const initialFormState = {
 function form(state = initialFormState, action) {
   switch(action.type) {
     case types.RESET_FORM:
-      return initialQuizState      
+      return initialFormState      
     case types.INPUT_CHANGE: {
       const { name, value } = action.payload
       if (Object.keys(state).includes(name)) {
