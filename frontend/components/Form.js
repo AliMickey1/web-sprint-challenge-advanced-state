@@ -14,6 +14,9 @@ export function Form(props) {
         if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length >= 1) && (newFalseAnswer.trim().length >= 1)) {
         setDisabled(false)
       }
+      else{
+        setDisabled(true)
+      }
     }
   
     const onChange = ({ target: { name, value } }) => {
