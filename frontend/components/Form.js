@@ -10,61 +10,32 @@ export function Form(props) {
 
 
     const { 
-      form: { newFalseAnswer, newQuestion, newTrueAnswer },
+      form: { newFalseAnswer, newQuestion, newTrueAnswer, question_text, true_answer_text, false_answer_text },
       inputChange, postQuiz 
     } = props
 
-  const newQuestionInput = (evt) => {
-
-    const value = evt.target.value
-    const name = evt.target.name
-    inputChange({ name, value })
-    
-    if(evt.target.value.trim().length > 0) setDisableQuestion(false)
-
-    if((disableQuestion === false) && (disableTrue === false) && (disableTrue === false)) {
-      setDisabled(false)
+    const isDisabled = () => {
+        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length > 0) && (newFalseAnswer.trim().length > 0)) {
+        setDisabled(false)
+      }
     }
-
-    console.log(`newQuestion: ${newQuestion} & value: ${value}`)
-    console.log(`questiondisabled: ${disableQuestion} disabled = ${disabled}`)
-  }
-  const newTrueAnswerInput  = (evt) => {
-
-    const value = evt.target.value
-    const name = evt.target.name
-    inputChange({ name, value })
-    
-    if(evt.target.value.trim().length > 0) setDisableTrue(false)
-
-    if((disableQuestion === false) && (disableTrue === false) && (disableTrue === false)) {
-      setDisabled(false)
+  
+    const onChange = evt => {
+      const { name, value } = evt.target
+      inputChange({ name, value })
+      isDisabled()
     }
-    console.log(`newTrueAnswer: ${newTrueAnswer} & value: ${value}`)
-    console.log(`disable true answer: ${disableTrue} disabled = ${disabled}`)
-  }
-
-  const newFalseAnswerInput  = (evt) => {
-
-    const value = evt.target.value
-    const name = evt.target.name
-    inputChange({ name, value })
-    
-    if(evt.target.value.trim().length > 0) setDisableFalse(false)
-
-    if((disableQuestion === false) && (disableTrue === false) && (disableTrue === false)) {
-      setDisabled(false)
-    }
-    console.log(`newFalseAnswer: ${newFalseAnswer} & value: ${value}`)
-    console.log(`disable false answer: ${disableFalse} disabled = ${disabled}`)
-  }
 
   const onSubmit = evt => {
     evt.preventDefault();
 
     console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
     // const { question_text, true_answer_text, false_answer_text } = 
-    postQuiz({newQuestion, newTrueAnswer, newFalseAnswer})
+    var question_text = newQuestion
+    var true_answer_text = newTrueAnswer
+    var false_answer_text = newFalseAnswer
+    // postQuiz({newQuestion, newTrueAnswer, newFalseAnswer})
+    postQuiz({question_text, true_answer_text, false_answer_text})
   }
 
 
@@ -73,21 +44,27 @@ export function Form(props) {
       <h2>Create New Quiz</h2>
       <input 
         maxLength={50} 
-        onChange={newQuestionInput} 
+        id="newQuestion"
+        // onChange={newQuestionInput} 
+        onChange={onChange}
         value={newQuestion}
         name="newQuestion"
         placeholder="Enter question" 
         />
       <input 
       maxLength={50} 
-      onChange={newTrueAnswerInput} 
+      id="newTrueAnswer"
+      // onChange={newTrueAnswerInput} 
+      onChange={onChange}
       value={newTrueAnswer} 
       name="newTrueAnswer" 
       placeholder="Enter true answer" 
       />
       <input 
       maxLength={50} 
-      onChange={newFalseAnswerInput} 
+      id="newFalseAnswer"
+      // onChange={newFalseAnswerInput} 
+      onChange={onChange}
       value={newFalseAnswer} 
       name="newFalseAnswer" 
       placeholder="Enter false answer" 
