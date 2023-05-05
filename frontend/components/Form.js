@@ -27,9 +27,9 @@ export function Form(props) {
 
     console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
     // const { question_text, true_answer_text, false_answer_text } = 
-    // var question_text = newQuestion
-    // var true_answer_text = newTrueAnswer
-    // var false_answer_text = newFalseAnswer
+    var question_text = newQuestion
+    var true_answer_text = newTrueAnswer
+    var false_answer_text = newFalseAnswer
     // postQuiz({newQuestion, newTrueAnswer, newFalseAnswer})
     postQuiz({question_text, true_answer_text, false_answer_text})
   }
