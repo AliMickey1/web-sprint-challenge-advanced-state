@@ -74,14 +74,11 @@ export function postQuiz({question_text, true_answer_text, false_answer_text}) {
     console.log(`question_text: ${question_text}, true_answer_text: ${true_answer_text}, false_answer_text: ${false_answer_text}`)
       axios.post(
         'http://localhost:9000/api/quiz/new',       
-        // ({newQuestion, newTrueAnswer, newFalseAnswer})
        { question_text, true_answer_text, false_answer_text }
       )
       .then(res => {
-        console.log(`Congrats: "${res.data.question}" is a great question!`)
-        dispatch(setMessage({
-          main: `Congrats: "${res.data.question}" is a great question!`
-        }))
+        // console.log(`Congrats: "${res.data.question}" is a great question!`)
+        dispatch(setMessage({ main: `Congrats: "${res.data.question}" is a great question!` }))
         dispatch(resetForm())
       })
       .catch(err => {
@@ -95,8 +92,3 @@ function setError(err, dispatch) {
   dispatch(setMessage({ main: errToDisplay, code: 'red' }))
 }
 
- // let question_text = newQuestion
-      // let true_answer_text = newTrueAnswer
-      // let false_answer_text = newFalseAnswer
-
-    // console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)

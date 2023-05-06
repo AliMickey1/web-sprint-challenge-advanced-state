@@ -19,7 +19,8 @@ export function Form(props) {
       }
     }
   
-    const onChange = ({ target: { name, value } }) => {
+    const onChange = evt => {
+      const { name, value } = evt.target
       inputChange({ name, value })
       isDisabled()
       console.log(`value: ${value} disabled: ${disabled}`)
@@ -28,12 +29,10 @@ export function Form(props) {
   const onSubmit = evt => {
     evt.preventDefault();
 
-    console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
-    // const { question_text, true_answer_text, false_answer_text } = 
+    // console.log(`newQuestion: ${newQuestion}, newTrueAnswer: ${newTrueAnswer}, newFalseAnswer: ${newFalseAnswer}`)
     var question_text = newQuestion
     var true_answer_text = newTrueAnswer
     var false_answer_text = newFalseAnswer
-    // postQuiz({newQuestion, newTrueAnswer, newFalseAnswer})
     postQuiz({question_text, true_answer_text, false_answer_text})
   }
 
