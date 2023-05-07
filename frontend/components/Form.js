@@ -4,6 +4,7 @@ import * as actions from '../state/action-creators'
 
 export function Form(props) {
   const [disabled, setDisabled ] = useState(true)
+  
 
     const { 
       form: { newFalseAnswer, newQuestion, newTrueAnswer },
@@ -11,19 +12,20 @@ export function Form(props) {
     } = props
 
     const isDisabled = () => {
-        if((newQuestion.trim().length >= 1) && (newTrueAnswer.trim().length >= 1) && (newFalseAnswer.trim().length >= 1)) {
+        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length > 0) && (newFalseAnswer.trim().length > 0)) {
         setDisabled(false)
       }
       else{
         setDisabled(true)
       }
+
     }
-  
+ 
     const onChange = evt => {
       const { name, value } = evt.target
       inputChange({ name, value })
       isDisabled()
-      console.log(`value: ${value} disabled: ${disabled}`)
+      // console.log(`value: ${value} disabled: ${disabled}`)
     }
 
   const onSubmit = evt => {
