@@ -6,7 +6,7 @@ export function Form(props) {
   const [disabled, setDisabled ] = useState(true)
 
     const { 
-      form: { newFalseAnswer, newQuestion, newTrueAnswer, question_text, true_answer_text, false_answer_text },
+      form: { newFalseAnswer, newQuestion, newTrueAnswer },
       inputChange, postQuiz, resetForm
     } = props
 
