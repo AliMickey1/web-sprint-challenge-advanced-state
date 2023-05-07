@@ -7,11 +7,11 @@ export function Form(props) {
 
     const { 
       form: { newFalseAnswer, newQuestion, newTrueAnswer, question_text, true_answer_text, false_answer_text },
-      inputChange, postQuiz 
+      inputChange, postQuiz, resetForm
     } = props
 
     const isDisabled = () => {
-        if((newQuestion.trim().length > 0) && (newTrueAnswer.trim().length > 0) && (newFalseAnswer.trim().length > 0)) {
+        if((newQuestion.trim().length >= 1) && (newTrueAnswer.trim().length >= 1) && (newFalseAnswer.trim().length >= 1)) {
         setDisabled(false)
       }
       else{
@@ -34,6 +34,7 @@ export function Form(props) {
     var true_answer_text = newTrueAnswer
     var false_answer_text = newFalseAnswer
     postQuiz({question_text, true_answer_text, false_answer_text})
+    resetForm()
   }
 
 
@@ -65,9 +66,9 @@ export function Form(props) {
       name="newFalseAnswer" 
       placeholder="Enter false answer" 
       />
-      <button id="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
+      <button id="submitNewQuizBtn" name="submitNewQuizBtn" disabled={disabled}>Submit new quiz</button>
     </form>
   )
 }
 
-export default connect(st => ({form: st.form, newQuestion: st.newQuestion}), {inputChange: actions.inputChange, postQuiz: actions.postQuiz})(Form)
+export default connect(st => ({form: st.form, newQuestion: st.newQuestion}), {inputChange: actions.inputChange, postQuiz: actions.postQuiz, resetForm: actions.resetForm})(Form)

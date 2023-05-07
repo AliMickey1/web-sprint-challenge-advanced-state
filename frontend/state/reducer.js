@@ -82,18 +82,7 @@ function form(state = initialFormState, action) {
       if (Object.keys(state).includes(name)) {
         return { ...state, [name]: value }
       }
-      const [optionName, optionKey] = name.split('-')
-      const options = state.options
-      if (optionKey && Object.keys(options).includes(optionKey)) {
-        const option = state.options[optionKey]
-        return {
-          ...state,
-          options: {
-            ...options,
-            [optionKey]: { ...option, [optionName]: value },
-          }
-        }
-      }
+      return state
     }
   default:  
     return state

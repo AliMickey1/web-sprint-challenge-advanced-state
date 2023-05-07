@@ -78,8 +78,10 @@ export function postQuiz({question_text, true_answer_text, false_answer_text}) {
       )
       .then(res => {
         // console.log(`Congrats: "${res.data.question}" is a great question!`)
-        dispatch(setMessage({ main: `Congrats: "${res.data.question}" is a great question!` }))
-        dispatch(resetForm())
+        dispatch(setMessage({ 
+          main: `Congrats: "${res.data.question}" is a great question!` 
+        }))
+        // dispatch(resetForm())
       })
       .catch(err => {
       setError(err, dispatch)
